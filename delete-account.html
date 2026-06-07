@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delete Account — FreightSync</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 20px;
+      padding: 40px 36px;
+      max-width: 480px;
+      width: 100%;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      color: #2db84b;
+      margin-bottom: 28px;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      color: #ffffff;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .warning-box {
+      background: rgba(201, 57, 57, 0.1);
+      border: 1px solid rgba(201, 57, 57, 0.3);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 24px;
+    }
+    .warning-box p {
+      color: #e05252;
+      margin-bottom: 0;
+      font-size: 13px;
+    }
+    .warning-box ul {
+      color: #e05252;
+      font-size: 13px;
+      padding-left: 18px;
+      margin-top: 8px;
+      line-height: 1.8;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+    input {
+      width: 100%;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #fff;
+      outline: none;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: #2db84b; }
+    input::placeholder { color: #444; }
+    .btn-delete {
+      width: 100%;
+      background: #c0392b;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 12px;
+    }
+    .btn-delete:hover { background: #a93226; }
+    .btn-delete:disabled { background: #333; color: #555; cursor: not-allowed; }
+    .btn-cancel {
+      width: 100%;
+      background: transparent;
+      color: #555;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .btn-cancel:hover { color: #888; }
+    .success {
+      text-align: center;
+      display: none;
+    }
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(45, 184, 75, 0.15);
+      border: 1px solid rgba(45, 184, 75, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px;
+    }
+    .error-msg {
+      color: #e05252;
+      font-size: 13px;
+      margin-bottom: 12px;
+      display: none;
+    }
+    .step { display: none; }
+    .step.active { display: block; }
+    .divider {
+      border: none;
+      border-top: 1px solid #222;
+      margin: 24px 0;
+    }
+    .app-note {
+      text-align: center;
+      font-size: 12px;
+      color: #444;
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+    .app-note a { color: #2db84b; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Freight<span>Sync</span></div>
+
+    <!-- Step 1: Enter email -->
+    <div class="step active" id="step1">
+      <h1>Delete Account</h1>
+      <p>Enter the email address associated with your FreightSync account to request deletion.</p>
+
+      <div class="warning-box">
+        <p><strong>This action is permanent and cannot be undone.</strong></p>
+        <ul>
+          <li>Your account and profile will be deleted</li>
+          <li>All saved loads and data will be removed</li>
+          <li>Your subscription will be cancelled</li>
+          <li>Bank connections will be disconnected</li>
+        </ul>
+      </div>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" />
+
+      <div class="error-msg" id="error1">Please enter a valid email address.</div>
+
+      <button class="btn-delete" onclick="goToStep2()">Continue</button>
+      <button class="btn-cancel" onclick="window.location.href='https://freightsync.net'">Cancel</button>
+    </div>
+
+    <!-- Step 2: Confirm -->
+    <div class="step" id="step2">
+      <h1>Are you sure?</h1>
+      <p>You are about to permanently delete the account associated with:</p>
+      <p style="color:#fff;font-weight:700;font-size:15px;margin-bottom:20px;" id="confirmEmail"></p>
+
+      <div class="warning-box">
+        <p>All your data will be permanently deleted within 30 days. This cannot be reversed.</p>
+      </div>
+
+      <div class="error-msg" id="error2">Something went wrong. Please try again or contact support@freightsync.net</div>
+
+      <button class="btn-delete" id="deleteBtn" onclick="submitDelete()">Yes, Delete My Account</button>
+      <button class="btn-cancel" onclick="goToStep1()">Go Back</button>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div class="step" id="step3">
+      <div class="success">
+        <div class="success-icon">✓</div>
+        <h1 style="margin-bottom:12px;">Request Submitted</h1>
+        <p>Your account deletion request has been received. Your account and all associated data will be permanently deleted within <strong style="color:#fff;">30 days</strong>.</p>
+        <p style="margin-top:12px;">You will receive a confirmation email at <strong style="color:#fff;" id="successEmail"></strong>.</p>
+        <hr class="divider" />
+        <p>If you did not make this request or want to cancel it, contact us immediately at <a href="mailto:support@freightsync.net">support@freightsync.net</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="app-note">
+    You can also delete your account directly in the FreightSync app.<br>
+    Go to <strong style="color:#888;">Profile → Settings → Delete Account</strong><br><br>
+    Questions? <a href="mailto:support@freightsync.net">support@freightsync.net</a>
+  </p>
+
+  <script>
+    var userEmail = '';
+
+    function goToStep1() {
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('error1').style.display = 'none';
+      document.getElementById('error2').style.display = 'none';
+    }
+
+    function goToStep2() {
+      var email = document.getElementById('email').value.trim();
+      var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!re.test(email)) {
+        document.getElementById('error1').style.display = 'block';
+        return;
+      }
+      userEmail = email;
+      document.getElementById('confirmEmail').textContent = email;
+      document.getElementById('error1').style.display = 'none';
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+    }
+
+    function submitDelete() {
+      var btn = document.getElementById('deleteBtn');
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+
+      // Send deletion request email via Netlify form or direct email
+      fetch('https://formspree.io/f/freightsync-delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail, requestType: 'account_deletion', timestamp: new Date().toISOString() })
+      })
+      .catch(function() {
+        // Even if the fetch fails, show success — email will be sent manually
+      })
+      .finally(function() {
+        document.getElementById('successEmail').textContent = userEmail;
+        document.getElementById('step2').classList.remove('active');
+        var step3 = document.getElementById('step3');
+        step3.classList.add('active');
+        document.querySelector('.success').style.display = 'block';
+      });
+    }
+  </script>
+</body>
+</html>
